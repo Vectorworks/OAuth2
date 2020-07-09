@@ -229,9 +229,11 @@ open class OAuth2AuthRequest {
 			case .wwwForm:
 				req.httpBody = try finalParams.utf8EncodedData()
 			case .json:
-				req.httpBody = try JSONSerialization.data(withJSONObject: finalParams, options: [])
+                let body = finalParams.OAuth2JSON()
+                client.logger?.debug("OAuth2", msg: "Request parameters: \(body)")
+                req.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
 			default:
-				oauth2.logger?.warn("OAuth2", filename: "OAuth2AuthRequest", function: "asURLRequest", msg: "\(oauth2.clientConfig.contentType) is unsupported content type!")
+				oauth2.logger?.warn("OAuth2", msg: "\(oauth2.clientConfig.contentType) is unsupported content type!")
 			}
 		}
 		return req
@@ -298,6 +300,22 @@ public struct OAuth2RequestParams {
 			throw OAuth2Error.utf8EncodeError
 		}
 	}
+    
+    /**
+    Creates a form encoded query string, then encodes it using UTF-8 to NSData.
+    
+    - returns: NSData representing the receiver form-encoded
+    */
+    public func OAuth2JSON() -> OAuth2JSON? {
+        guard nil != params else {
+            return nil
+        }
+        var dict = OAuth2JSON()
+        for (key, val) in params {
+            dict[key] = val
+        }
+        return dict
+    }
 	
 	/**
 	Creates a parameter string in the form of `key1=value1&key2=value2`, using form URL encoding.
