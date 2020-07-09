@@ -43,17 +43,6 @@ class OAuth2AuthRequestTests: XCTestCase {
 		XCTAssertTrue(req3.method == .GET)
 	}
 	
-	func testContentType() {
-		let url = URL(string: "http://localhost")!
-		let req = OAuth2AuthRequest(url: url)
-		XCTAssertTrue(req.contentType == .wwwForm)
-		XCTAssertEqual("application/x-www-form-urlencoded; charset=utf-8", req.contentType.rawValue)
-		
-		req.contentType = .json
-		XCTAssertTrue(req.contentType == .json)
-		XCTAssertEqual("application/json", req.contentType.rawValue)
-	}
-	
 	func testHeaders() {
 		let url = URL(string: "http://localhost")!
 		let req = OAuth2AuthRequest(url: url)

@@ -95,6 +95,9 @@ open class OAuth2ClientConfig {
 	/// See https://tools.ietf.org/html/rfc7636
 	///
 	open var useProofKeyForCodeExchange = false
+	
+	/// The content type for POST request to tokenURL and refreshURL, the default is OAuth2HTTPContentType.wwwForm.
+	public final var contentType = OAuth2HTTPContentType.wwwForm
 
 	/**
 	Initializer to initialize properties from a settings dictionary.

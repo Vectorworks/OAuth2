@@ -74,9 +74,6 @@ open class OAuth2AuthRequest {
 	/// The HTTP method.
 	public let method: OAuth2HTTPMethod
 	
-	/// The content type that will be specified. Defaults to `wwwForm`.
-	open var contentType = OAuth2HTTPContentType.wwwForm
-	
 	/// Custom headers can be set here, they will take precedence over any built-in headers.
 	open private(set) var headers: [String: String]?
 	
@@ -180,7 +177,7 @@ open class OAuth2AuthRequest {
 		let finalURL = try asURL()
 		var req = URLRequest(url: finalURL)
 		req.httpMethod = method.rawValue
-		req.setValue(contentType.rawValue, forHTTPHeaderField: "Content-Type")
+		req.setValue(oauth2.clientConfig.contentType.rawValue, forHTTPHeaderField: "Content-Type")
 		req.setValue("application/json", forHTTPHeaderField: "Accept")
 		
 		// handle client secret if there is one
@@ -228,7 +225,14 @@ open class OAuth2AuthRequest {
 		}
 		// add a body to POST requests
 		if .POST == method && finalParams.count > 0 {
-			req.httpBody = try finalParams.utf8EncodedData()
+			switch oauth2.clientConfig.contentType {
+			case .wwwForm:
+				req.httpBody = try finalParams.utf8EncodedData()
+			case .json:
+				req.httpBody = try JSONSerialization.data(withJSONObject: finalParams, options: [])
+			default:
+				oauth2.logger?.warn("OAuth2", filename: "OAuth2AuthRequest", function: "asURLRequest", msg: "\(oauth2.clientConfig.contentType) is unsupported content type!")
+			}
 		}
 		return req
 	}
