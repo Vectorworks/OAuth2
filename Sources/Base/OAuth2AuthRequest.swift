@@ -229,8 +229,8 @@ open class OAuth2AuthRequest {
 			case .wwwForm:
 				req.httpBody = try finalParams.utf8EncodedData()
 			case .json:
-                let body = finalParams.OAuth2JSON()
-                client.logger?.debug("OAuth2", msg: "Request parameters: \(body)")
+                let body = finalParams.asOAuth2JSON()
+                oauth2.logger?.debug("OAuth2", msg: "Request parameters: \(body)")
                 req.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
 			default:
 				oauth2.logger?.warn("OAuth2", msg: "\(oauth2.clientConfig.contentType) is unsupported content type!")
@@ -306,11 +306,11 @@ public struct OAuth2RequestParams {
     
     - returns: NSData representing the receiver form-encoded
     */
-    public func OAuth2JSON() -> OAuth2JSON? {
-        guard nil != params else {
-            return nil
-        }
+    public func asOAuth2JSON() -> OAuth2JSON {
         var dict = OAuth2JSON()
+        guard let params = params else {
+            return dict
+        }
         for (key, val) in params {
             dict[key] = val
         }
