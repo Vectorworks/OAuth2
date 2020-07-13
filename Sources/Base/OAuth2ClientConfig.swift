@@ -98,6 +98,9 @@ open class OAuth2ClientConfig {
 	
 	/// The content type for POST request to tokenURL and refreshURL, the default is OAuth2HTTPContentType.wwwForm.
 	public final var contentType = OAuth2HTTPContentType.wwwForm
+    
+    /// The token prefix to be used in the Header for Authorization field, the default is Bearer.
+    public final var headerTokenPrefix = "Bearer"
 
 	/**
 	Initializer to initialize properties from a settings dictionary.
@@ -158,6 +161,10 @@ open class OAuth2ClientConfig {
 		if let usePKCE = settings["use_pkce"] as? Bool {
 			useProofKeyForCodeExchange = usePKCE
 		}
+        
+        if let tokenPrefix = settings["token_prefix"] as? String {
+            headerTokenPrefix = tokenPrefix
+        }
 		
 	}
 	
