@@ -33,7 +33,7 @@ import OAuth2
 
 class OAuth2DynRegTests: XCTestCase {
 	
-	func genericOAuth2(_ extra: OAuth2JSON? = nil) -> OAuth2 {
+	func genericOAuth2(_ extra: OAuth2JSON? = nil) -> OAuth2C {
 		var settings = [
 			"authorize_uri": "https://auth.ful.io",
 			"token_uri": "https://token.ful.io",
@@ -113,7 +113,7 @@ class OAuth2DynRegTests: XCTestCase {
 
 
 class OAuth2TestDynReg: OAuth2DynReg {
-	override func register(client: OAuth2, callback: @escaping ((OAuth2JSON?, OAuth2Error?) -> Void)) {
+	override func register(client: OAuth2C, callback: @escaping ((OAuth2JSON?, OAuth2Error?) -> Void)) {
 		callback(nil, OAuth2Error.temporarilyUnavailable(nil))
 	}
 }

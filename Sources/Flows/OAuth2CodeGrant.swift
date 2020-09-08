@@ -31,7 +31,7 @@ This auth flow is designed for clients that are capable of protecting their clie
 exchange and token refresh flows, **if** the client has a secret, a "Basic key:secret" Authorization header will be used. If not the client
 key will be embedded into the request body.
 */
-open class OAuth2CodeGrant: OAuth2 {
+open class OAuth2CodeGrant: OAuth2C {
 	
 	override open class var grantType: String {
 		return "authorization_code"

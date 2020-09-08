@@ -50,7 +50,7 @@ A class to handle authorization for clients via password grant.
 
 If no credentials are set when authorizing, a native controller is shown so that the user can provide them.
 */
-open class OAuth2PasswordGrant: OAuth2 {
+open class OAuth2PasswordGrant: OAuth2C {
 	
 	override open class var grantType: String {
 		return "password"

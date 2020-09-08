@@ -34,7 +34,7 @@ import Foundation
 /**
 Base class for specific OAuth2 flow implementations.
 */
-open class OAuth2: OAuth2Base {
+open class OAuth2C: OAuth2Base {
 	
 	/// Whether the flow type mandates client identification.
 	open class var clientIdMandatory: Bool {

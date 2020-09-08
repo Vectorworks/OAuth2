@@ -27,7 +27,7 @@ import Base
 /**
 Class to handle two-legged OAuth2 requests of the "client_credentials" type.
 */
-open class OAuth2ClientCredentials: OAuth2 {
+open class OAuth2ClientCredentials: OAuth2C {
 	
 	override open class var grantType: String {
 		return "client_credentials"

@@ -33,8 +33,8 @@ import OAuth2
 
 class OAuth2RefreshTokenTests: XCTestCase {
 	
-	func genericOAuth2() -> OAuth2 {
-		return OAuth2(settings: [
+	func genericOAuth2() -> OAuth2C {
+		return OAuth2C(settings: [
 			"client_id": "abc",
 			"authorize_uri": "https://auth.ful.io",
 			"token_uri": "https://token.ful.io",
@@ -42,8 +42,8 @@ class OAuth2RefreshTokenTests: XCTestCase {
 		])
 	}
 
-	func refreshOAuth2() -> OAuth2 {
-		return OAuth2(settings: [
+	func refreshOAuth2() -> OAuth2C {
+		return OAuth2C(settings: [
 			"client_id": "abc",
 			"authorize_uri": "https://auth.ful.io",
 			"token_uri": "https://token.ful.io",
@@ -79,7 +79,7 @@ class OAuth2RefreshTokenTests: XCTestCase {
 		XCTAssertNil(params)
 		let body = String(data: req!.httpBody!, encoding: String.Encoding.utf8)
 		XCTAssertNotNil(body)
-		let dict = OAuth2.params(fromQuery: body!)
+		let dict = OAuth2C.params(fromQuery: body!)
 		XCTAssertEqual(dict["client_id"], "abc")
 		XCTAssertEqual(dict["refresh_token"], "pov")
 		XCTAssertEqual(dict["grant_type"], "refresh_token")
@@ -101,7 +101,7 @@ class OAuth2RefreshTokenTests: XCTestCase {
 		XCTAssertNil(params)
 		let body = String(data: req!.httpBody!, encoding: String.Encoding.utf8)
 		XCTAssertNotNil(body)
-		let dict = OAuth2.params(fromQuery: body!)
+		let dict = OAuth2C.params(fromQuery: body!)
 		XCTAssertEqual(dict["client_id"], "abc")
 		XCTAssertEqual(dict["refresh_token"], "pov")
 		XCTAssertEqual(dict["grant_type"], "refresh_token")
@@ -119,7 +119,7 @@ class OAuth2RefreshTokenTests: XCTestCase {
 		XCTAssertNotNil(req?.httpBody)
 		let body = String(data: req!.httpBody!, encoding: String.Encoding.utf8)
 		XCTAssertNotNil(body)
-		let dict = OAuth2.params(fromQuery: body!)
+		let dict = OAuth2C.params(fromQuery: body!)
 		XCTAssertNil(dict["client_id"])
 		XCTAssertNil(dict["client_secret"])
 		let auth = req!.allHTTPHeaderFields?["Authorization"]
@@ -138,7 +138,7 @@ class OAuth2RefreshTokenTests: XCTestCase {
 		XCTAssertNotNil(req?.httpBody)
 		let body = String(data: req!.httpBody!, encoding: String.Encoding.utf8)
 		XCTAssertNotNil(body)
-		let dict = OAuth2.params(fromQuery: body!)
+		let dict = OAuth2C.params(fromQuery: body!)
 		XCTAssertEqual(dict["client_id"], "abc")
 		XCTAssertEqual(dict["client_secret"], "uvw")
 		XCTAssertEqual(dict["param"], "fool")

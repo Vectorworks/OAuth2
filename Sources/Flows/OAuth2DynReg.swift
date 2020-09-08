@@ -53,7 +53,7 @@ open class OAuth2DynReg {
 	- parameter client: The client to register and update with client credentials, when successful
 	- parameter callback: The callback to call when done with the registration response (JSON) and/or an error
 	*/
-	open func register(client: OAuth2, callback: @escaping ((_ json: OAuth2JSON?, _ error: OAuth2Error?) -> Void)) {
+	open func register(client: OAuth2C, callback: @escaping ((_ json: OAuth2JSON?, _ error: OAuth2Error?) -> Void)) {
 		do {
 			let req = try registrationRequest(for: client)
 			client.logger?.debug("OAuth2", msg: "Registering client at \(req.url!) with scopes “\(client.scope ?? "(none)")”")
@@ -89,7 +89,7 @@ open class OAuth2DynReg {
 	- parameter for: The OAuth2 client the request is built for
 	- returns:       A URL request to be used for registration
 	*/
-	open func registrationRequest(for client: OAuth2) throws -> URLRequest {
+	open func registrationRequest(for client: OAuth2C) throws -> URLRequest {
 		guard let registrationURL = client.clientConfig.registrationURL else {
 			throw OAuth2Error.noRegistrationURL
 		}
@@ -111,7 +111,7 @@ open class OAuth2DynReg {
 	}
 	
 	/** The body data to use for registration. */
-	open func registrationBody(for client: OAuth2) -> OAuth2JSON {
+	open func registrationBody(for client: OAuth2C) -> OAuth2JSON {
 		var dict = OAuth2JSON()
 		if let client = client.clientConfig.clientName {
 			dict["client_name"] = client
@@ -148,7 +148,7 @@ open class OAuth2DynReg {
 	- parameter client: The client for which we're doing registration
 	- returns:          An OAuth2JSON representation of the registration data
 	*/
-	open func parseRegistrationResponse(data: Data, client: OAuth2) throws -> OAuth2JSON {
+	open func parseRegistrationResponse(data: Data, client: OAuth2C) throws -> OAuth2JSON {
 		return try client.parseJSON(data)
 	}
 	
@@ -161,7 +161,7 @@ open class OAuth2DynReg {
 	- parameter json:   The registration data in JSON format
 	- parameter client: The client for which we're doing registration
 	*/
-	open func didRegisterWith(json: OAuth2JSON, client: OAuth2) {
+	open func didRegisterWith(json: OAuth2JSON, client: OAuth2C) {
 		if let id = json["client_id"] as? String {
 			client.clientId = id
 			client.logger?.debug("OAuth2", msg: "Did register with client-id “\(id)”, params: \(json)")

@@ -31,7 +31,7 @@ A class that makes loading data from a protected endpoint easier.
 open class OAuth2DataLoader: OAuth2Requestable {
 	
 	/// The OAuth2 instance used for OAuth2 access tokvarretrieval.
-	public let oauth2: OAuth2
+	public let oauth2: OAuth2C
 	
 	/// If set to true, a 403 is treated as a 401. The default is false.
 	public var alsoIntercept403: Bool = false
@@ -45,7 +45,7 @@ open class OAuth2DataLoader: OAuth2Requestable {
 	- parameter oauth2: The OAuth2 instance to use for authorization when loading data.
 	- parameter host:   If given will handle redirects within the same host by way of `OAuth2DataLoaderSessionTaskDelegate`
 	*/
-	public init(oauth2: OAuth2, host: String? = nil) {
+	public init(oauth2: OAuth2C, host: String? = nil) {
 		self.oauth2 = oauth2
 		super.init(logger: oauth2.logger)
 		if let host = host {

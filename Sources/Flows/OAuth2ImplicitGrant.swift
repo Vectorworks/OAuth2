@@ -27,7 +27,7 @@ import Base
 /**
 Class to handle OAuth2 requests for public clients, such as distributed Mac/iOS Apps.
 */
-open class OAuth2ImplicitGrant: OAuth2 {
+open class OAuth2ImplicitGrant: OAuth2C {
 	
 	override open class var grantType: String {
 		return "implicit"
