@@ -173,6 +173,9 @@ open class OAuth2Authorizer: OAuth2AuthorizerUI {
 #else
 		if #available(iOS 12, *) {
 			authenticationSession = ASWebAuthenticationSession(url: url, callbackURLScheme: redirectURL.scheme, completionHandler: completionHandler)
+			if #available(iOS 17.4, *), let host = redirectURL.host() {
+				authenticationSession = ASWebAuthenticationSession(url: url, callback: ASWebAuthenticationSession.Callback.https(host: host, path: redirectURL.path()), completionHandler: completionHandler)
+			}
 			if #available(iOS 13.0, *) {
 				webAuthenticationPresentationContextProvider = OAuth2ASWebAuthenticationPresentationContextProvider(authorizer: self)
 				if let session = authenticationSession as? ASWebAuthenticationSession {
