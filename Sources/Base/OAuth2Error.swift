@@ -97,6 +97,8 @@ public enum OAuth2Error: Error, CustomStringConvertible, Equatable {
 	/// The request was canceled.
 	case requestCancelled
 	
+	case requestCancelledExternal
+	
 	
 	// MARK: - Response Errors
 	
@@ -240,6 +242,8 @@ public enum OAuth2Error: Error, CustomStringConvertible, Equatable {
 			return "The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed."
 		case .requestCancelled:
 			return "The request has been canceled"
+		case .requestCancelledExternal:
+			return "The request has been canceled: An asynchronous load has been canceled. NSURLSession sends this error to its delegate when a task is cancelled."
 		case .noTokenType:
 			return "No token type received, will not use the token"
 		case .unsupportedTokenType(let message):
